@@ -10,6 +10,8 @@ public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
     public static void main(String... args) {
         int exitCode = runConsole(args);
         System.exit(exitCode);
+
+        //----
     }
 
     protected static int runConsole(String[] args) {
