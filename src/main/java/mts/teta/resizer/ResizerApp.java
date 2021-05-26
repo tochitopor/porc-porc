@@ -9,6 +9,9 @@ import java.util.concurrent.Callable;
 public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
     public static void main(String... args) {
         int exitCode = runConsole(args);
+
+        System.out.println("asdf");
+
         System.exit(exitCode);
 
         //----
@@ -20,8 +23,14 @@ public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        ImageProcessor imageProcessor = new ImageProcessor();
-        imageProcessor.processImage(ImageIO.read(inputFile), this);
+        /*ImageProcessor imageProcessor = new ImageProcessor();
+        imageProcessor.processImage(ImageIO.read(inputFile), this);*/
+        if(resize) {
+            System.out.println("resize");
+        }
+        if(quality){
+            System.out.println("quality");
+        }
         return 0;
     }
 }
