@@ -1,4 +1,6 @@
-package mts.teta.resizer;
+package mts.teta.resizer.imageprocessor;
+
+import mts.teta.resizer.ResizerApp;
 
 import java.awt.image.BufferedImage;
 

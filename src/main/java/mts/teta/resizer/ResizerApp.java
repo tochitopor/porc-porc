@@ -1,20 +1,23 @@
 package mts.teta.resizer;
 
+import mts.teta.resizer.imageprocessor.ImageProcessor;
 import picocli.CommandLine;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import java.util.concurrent.Callable;
 
-@CommandLine.Command(name = "resizer", mixinStandardHelpOptions = true, version = "resizer 0.0.1", description = "...")
+@CommandLine.Command(name = "resizer",
+                     mixinStandardHelpOptions = true,
+                     version = "resizer 0.0.1",
+                     description = "Available formats: jpeg png",
+                     separator = " ",
+                     parameterListHeading = "Parameters settings:\n",
+                     optionListHeading = "Options settings:\n")
 public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
     public static void main(String... args) {
         int exitCode = runConsole(args);
-
-        System.out.println("asdf");
-
         System.exit(exitCode);
-
-        //----
     }
 
     protected static int runConsole(String[] args) {
@@ -23,13 +26,12 @@ public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        /*ImageProcessor imageProcessor = new ImageProcessor();
-        imageProcessor.processImage(ImageIO.read(inputFile), this);*/
-        if(resize) {
-            System.out.println("resize");
+        ImageProcessor imageProcessor = new ImageProcessor();
+        try{
+            imageProcessor.processImage(ImageIO.read(getInputFile()), this);
         }
-        if(quality){
-            System.out.println("quality");
+        catch(IIOException e){
+            throw new IIOException("failure of reading or writing operations");
         }
         return 0;
     }
