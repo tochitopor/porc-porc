@@ -15,7 +15,11 @@ import java.util.concurrent.Callable;
                      parameterListHeading = "Parameters settings:\n",
                      optionListHeading = "Options settings:\n")
 public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
-    public static void main(String... args) {
+    public static void main(String... args){
+        args[0] = "./src/test/resources/Good_Will_Hunting_1997.jpg";
+        args[1] = "./src/test/resources/result.jpg";
+        args[2] = "-r";
+        args[3] = "900 900";
         int exitCode = runConsole(args);
         System.exit(exitCode);
     }
@@ -31,7 +35,7 @@ public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
             imageProcessor.processImage(ImageIO.read(getInputFile()), this);
         }
         catch(IIOException e){
-            throw new IIOException("failure of reading or writing operations");
+            throw new IIOException("FAILURE OF READING OR WRITING OPERATIONS");
         }
         return 0;
     }
