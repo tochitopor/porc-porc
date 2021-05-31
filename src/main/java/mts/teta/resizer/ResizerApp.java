@@ -16,10 +16,12 @@ import java.util.concurrent.Callable;
                      optionListHeading = "Options settings:\n")
 public class ResizerApp extends ConsoleAttributes implements Callable<Integer> {
     public static void main(String... args){
-        args[0] = "./src/test/resources/Good_Will_Hunting_1997.jpg";
-        args[1] = "./src/test/resources/result.jpg";
-        args[2] = "-r";
-        args[3] = "900 900";
+        args[0] = "D:/java/mtsTeta/porc-porc/src/test/resources/Good_Will_Hunting_1997.jpg";
+        args[1] = "D:/java/mtsTeta/porc-porc/src/test/resources/result.jpg";
+        args[2] = "-c";
+        args[3] = "900 900 0 0";
+        //args[4] = "-r";
+        //args[5] = "900 900";
         int exitCode = runConsole(args);
         System.exit(exitCode);
     }

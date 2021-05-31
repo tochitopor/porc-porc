@@ -1,8 +1,10 @@
 package mts.teta.resizer;
 
+import mts.teta.resizer.imageprocessor.BadAttributesException;
 import picocli.CommandLine;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class ConsoleAttributes {
 
@@ -18,23 +20,23 @@ public class ConsoleAttributes {
                         paramLabel = "width height",
                         description = "resize the image",
                         split = " ")
-    private int[] resize = new int[2];
+    private Integer[] resize = new Integer[2];
 
    @CommandLine.Option(names = {"-q", "--quality"},
                        paramLabel = "value",
                        description = "JPEG/PNG compression level")
-    private int quality;
+    private Integer quality;
 
     @CommandLine.Option(names = {"-c", "--crop"},
                         paramLabel = "width height x y",
                         description = "cut out one rectangular area of the image",
                         split = " ")
-    private int[] crop = new int[4];
+    private Integer[] crop = new Integer[4];
 
     @CommandLine.Option(names = {"-b", "--blur"},
                         paramLabel = "radius",
                         description = "reduce image noise detail levels")
-    private int blur;
+    private Integer blur;
 
     @CommandLine.Option(names = {"-f", "--format"},
                         paramLabel = "\"outputFormat\"",
@@ -57,55 +59,55 @@ public class ConsoleAttributes {
         this.outputFile = outputFile;
     }
 
-    public int getResizeWidth() {
+    public Integer getResizeWidth() {
         return resize[0];
     }
 
-    public void setResizeWidth(int width) {
+    public void setResizeWidth(Integer width) {
         resize[0] = width;
     }
 
-    public int getResizeHeight() {
+    public Integer getResizeHeight() {
         return resize[1];
     }
 
-    public void setResizeHeight(int height) {
+    public void setResizeHeight(Integer height) {
         resize[1] = height;
     }
 
-    public int getQuality() {
+    public Integer getQuality() {
         return quality;
     }
 
-    public void setQuality(int quality) {
+    public void setQuality(Integer quality) {
         this.quality = quality;
     }
 
-    public int getCropWidth() {
+    public Integer getCropWidth() {
         return crop[0];
     }
 
-    public void setCropWidth(int cropWidth) {
+    public void setCropWidth(Integer cropWidth) {
         crop[0] = cropWidth;
     }
 
-    public int getCropHeight() {
+    public Integer getCropHeight() {
         return crop[1];
     }
 
-    public void setCropHeight(int cropHeight) {
+    public void setCropHeight(Integer cropHeight) {
         crop[1] = cropHeight;
     }
 
-    public int getCropX() {
+    public Integer getCropX() {
         return crop[2];
     }
 
-    public void setCropX(int cropX) {
+    public void setCropX(Integer cropX) {
         crop[2] = cropX;
     }
 
-    public int getCropY() {
+    public Integer getCropY() {
         return crop[3];
     }
 
@@ -113,7 +115,7 @@ public class ConsoleAttributes {
         crop[3] = cropY;
     }
 
-    public int getBlur() {
+    public Integer getBlur() {
         return blur;
     }
 
@@ -127,6 +129,20 @@ public class ConsoleAttributes {
 
     public void setFormat(String format) {
         this.format = format;
+    }
+
+    public void chekAttr() throws BadAttributesException {
+        if(resize[0] != null
+                && (resize.length!=2 || resize[0]<=0 || resize[1]<=0))
+            throw new BadAttributesException(" BAD RESIZE ATTRIBUTES ");
+
+        if(quality != null
+                && (quality<1 || quality>100))
+            throw new BadAttributesException(" BAD QUALITY ATTRIBUTES ");
+
+        if(crop != null
+                &&(crop[0]<1 || crop[1]<1 || crop[2]<0 || crop[3]<0))
+            throw new BadAttributesException(" BAD CROP ATTRIBUTES ");
     }
 
 }
