@@ -134,15 +134,25 @@ public class ConsoleAttributes {
     public void chekAttr() throws BadAttributesException {
         if(resize[0] != null
                 && (resize.length!=2 || resize[0]<=0 || resize[1]<=0))
-            throw new BadAttributesException(" BAD RESIZE ATTRIBUTES ");
+            throw new BadAttributesException("Please check params!");
 
         if(quality != null
                 && (quality<1 || quality>100))
-            throw new BadAttributesException(" BAD QUALITY ATTRIBUTES ");
+            throw new BadAttributesException("Please check params!");
 
-        if(crop != null
+        if(crop[0] != null
                 &&(crop[0]<1 || crop[1]<1 || crop[2]<0 || crop[3]<0))
-            throw new BadAttributesException(" BAD CROP ATTRIBUTES ");
+            throw new BadAttributesException("Please check params!");
+
+        if(blur != null
+                && blur < 0)
+            throw new BadAttributesException("Please check params!");
+
+        if( format != null && !format.equalsIgnoreCase("jpeg")){
+            if(!format.equalsIgnoreCase("png"))
+                throw new BadAttributesException("Please check params!");
+        }
+
     }
 
 }

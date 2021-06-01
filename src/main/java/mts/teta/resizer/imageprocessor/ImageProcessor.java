@@ -32,7 +32,6 @@ public class ImageProcessor {
 
         //crop
         if(app.getCropHeight() != null){
-            MarvinImage temp;
             if(tb == null)
                 mi = new MarvinImage(image);
             else
@@ -48,11 +47,37 @@ public class ImageProcessor {
         }
 
         //blur
-        //format
+        if(app.getBlur() != null) {
+            if(mi == null) {
+                if (tb != null)
+                    mi = new MarvinImage(tb.asBufferedImage());
+                else
+                    mi = new MarvinImage(image);
+            }
 
-        if(tb != null)
-            tb.toFile(app.getOutputFile());
-        else if(mi != null)
-            MarvinImageIO.saveImage(mi,app.getOutputFile().getAbsolutePath());
+            MarvinPluginCollection.gaussianBlur(mi.clone(),
+                                                mi,
+                                              app.getBlur());
+        }
+
+        //format + output
+        if(mi != null) {
+            if(app.getFormat() != null)
+                MarvinImageIO.saveImage(mi, app.getOutputFile().getAbsolutePath()+"."+app.getOutputFile());
+            else
+                MarvinImageIO.saveImage(mi, app.getOutputFile().getAbsolutePath());
+        }
+        else if(tb != null) {
+            if(app.getFormat() != null)
+                tb.outputFormat(app.getFormat()).toFile(app.getOutputFile());
+            else
+                tb.toFile(app.getOutputFile());
+        }
+        else{
+            Thumbnails.of(image)
+                      .forceSize(image.getWidth(), image.getHeight())
+                      .outputFormat(app.getFormat())
+                      .toFile(app.getOutputFile());
+        }
     }
 }
